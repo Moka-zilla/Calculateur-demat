@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta_title">Calculateur : Le Vrai Coût du Dématérialisé</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- SÉLECTEUR DE LANGUE (FR / EN) -->
+        <div class="lang-switcher">
+            <button id="btn-fr" class="lang-btn active" onclick="setLanguage('fr')">🇫🇷 Français</button>
+            <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">🇬🇧 English</button>
+        </div>
+
+        <!-- EN-TÊTE -->
+        <header>
+            <h1 data-i18n="header_title">Le Vrai Coût du <span class="highlight">Dématérialisé</span></h1>
+            <p class="subtitle" data-i18n="header_sub">Ne laissez pas les stores numériques confisquer votre pouvoir d'achat et votre liberté de consommer.</p>
+        </header>
+
+        <!-- GRILLE DE CALCUL -->
+        <main class="grid">
+            
+            <!-- COLONNE GAUCHE : CONTRÔLES -->
+            <section class="card controls-card">
+                <div class="card-header">
+                    <h2 data-i18n="habits_title">⚙️ Vos Habitudes de Jeu</h2>
+                    <p class="card-desc" data-i18n="habits_desc">Ajustez les curseurs selon votre profil pour un calcul sur mesure.</p>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="years" data-i18n="lbl_years">Durée estimée (Génération de console)</label>
+                        <span class="value-display" id="val-years">5 ans</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_years">Une génération de console dure généralement entre 5 et 7 ans.</div>
+                    <input type="range" id="years" min="1" max="10" value="5">
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="games" data-i18n="lbl_games">Jeux neufs achetés par an</label>
+                        <span class="value-display" id="val-games">6 jeux</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_games">Nombre de jeux achetés au tarif "lancement" chaque année.</div>
+                    <input type="range" id="games" min="1" max="20" value="6">
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="price-demat" data-i18n="lbl_price_demat">Prix moyen sur le Store (Dématérialisé)</label>
+                        <span class="value-display demat-color" id="val-price-demat">79 €</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_price_demat">Prix fixe imposé sur le PS Store / Xbox Store (aucun revendeur concurrent).</div>
+                    <input type="range" id="price-demat" min="40" max="90" value="79">
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="price-phys" data-i18n="lbl_price_phys">Prix moyen en magasin (Physique)</label>
+                        <span class="value-display phys-color" id="val-price-phys">58 €</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_price_phys">Prix en grande surface ou e-commerce au lancement (concurrence forte).</div>
+                    <input type="range" id="price-phys" min="30" max="80" value="58">
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="resell-pct" data-i18n="lbl_resell_pct">Jeux revendus en occasion</label>
+                        <span class="value-display" id="val-resell-pct">50 %</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_resell_pct">Pourcentage de jeux physiques finis que vous revendez.</div>
+                    <input type="range" id="resell-pct" min="0" max="100" step="10" value="50">
+                </div>
+
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="resell-price" data-i18n="lbl_resell_price">Gain moyen par jeu revendu</label>
+                        <span class="value-display phys-color" id="val-resell-price">35 €</span>
+                    </div>
+                    <div class="help-text" data-i18n="help_resell_price">Prix de revente moyen sur Vinted, Leboncoin, ou en magasin d'occasion.</div>
+                    <input type="range" id="resell-price" min="10" max="60" value="35">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="add-drive" checked>
+                    <div class="checkbox-labels">
+                        <label for="add-drive" class="checkbox-title" data-i18n="lbl_add_drive">Inclure le coût du lecteur de disque (+120 €)</label>
+                        <span class="checkbox-subtitle" data-i18n="help_add_drive">Pour la PS5 Slim ou PS5 Pro, le lecteur est vendu séparément. Nous le comptons comme investissement de départ pour être 100% honnête.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COLONNE DROITE : RÉSULTATS -->
+            <section class="card results-card">
+                <div class="card-header">
+                    <h2 data-i18n="results_title">💸 Impact sur votre Portefeuille</h2>
+                    <p class="card-desc" data-i18n="results_desc">Comparatif financier global à la fin de la période.</p>
+                </div>
+
+                <div class="result-box" id="result-box">
+                    <div class="result-title" data-i18n="loss_title">Perte sèche en optant pour le 100% Dématérialisé :</div>
+                    <div class="result-number" id="total-loss">0 €</div>
+                    <p class="result-desc" id="loss-summary"></p>
+                </div>
+
+                <div class="table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="tbl_th_item">Poste de dépense</th>
+                                <th class="col-demat" data-i18n="tbl_th_demat">100% Démat</th>
+                                <th class="col-phys" data-i18n="tbl_th_phys">100% Physique</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span data-i18n="tbl_buy">Achat des jeux</span> <br><small class="tbl-sub" id="tbl-total-games">(30 jeux)</small></td>
+                                <td class="val-demat" id="tbl-demat-buy">0 €</td>
+                                <td class="val-physique" id="tbl-phys-buy">0 €</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tbl_drive">Lecteur de disque</td>
+                                <td class="val-demat">0 €</td>
+                                <td class="val-physique" id="tbl-drive-cost">120 €</td>
+                            </tr>
+                            <tr>
+                                <td><span data-i18n="tbl_resell">Revente (Occasion)</span> <br><small class="tbl-sub" id="tbl-resell-count">(0 jeux revendus)</small></td>
+                                <td class="val-demat">0 €</td>
+                                <td class="val-physique gain" id="tbl-resell-gain">- 0 €</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td data-i18n="tbl_total">DÉPENSE RÉELLE NETTE</td>
+                                <td class="val-demat" id="tbl-demat-total">0 €</td>
+                                <td class="val-physique" id="tbl-phys-total">0 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="calc-explanation">
+                    <h4 data-i18n="calc_title">💡 Comment ce calcul est-il fait ?</h4>
+                    <ul id="explanation-list"></ul>
+                </div>
+
+                <!-- ÉQUIVALENCES -->
+                <div class="equivalents">
+                    <h3 data-i18n="eq_title">Ce que cette perte représente concrètement :</h3>
+                    <div class="eq-grid">
+                        <div class="equivalent-item">
+                            <div class="eq-icon">🎮</div>
+                            <div class="eq-text">
+                                <strong id="eq-games">0</strong>
+                                <span data-i18n="eq_games_desc">Jeux neufs offerts (à 60€ en magasin)</span>
+                            </div>
+                        </div>
+                        <div class="equivalent-item">
+                            <div class="eq-icon">⭐</div>
+                            <div class="eq-text">
+                                <strong id="eq-psplus">0 an</strong>
+                                <span data-i18n="eq_psplus_desc">D'abonnement annuel PS+ / GamePass offert<br><small style="color:var(--text-muted);">(Calculé sur la base d'un abonnement 1 an à ~126€)</small></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="equivalent-item alert-eq" id="eq-console-box" style="display:none;">
+                        <div class="eq-icon">🚨</div>
+                        <div class="eq-text">
+                            <strong data-i18n="eq_console_title">Une console neuve gratuite !</strong>
+                            <span data-i18n="eq_console_desc">La somme perdue suffit à vous racheter la prochaine console à sa sortie !</span>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <!-- TABLEAU COMPARATIF DES ABUS ET CHANGEMENTS -->
+        <section class="abuse-section">
+            <h2 data-i18n="abuse_title">📊 Ce que ça change aujourd'hui & Les futurs abus possibles</h2>
+            <p class="section-desc" data-i18n="abuse_desc">En supprimant le lecteur de disque, les constructeurs obtiennent un monopole total. Voici les dangers et les dérives que le passage au 100% numérique entraîne :</p>
+            
+            <div class="table-container">
+                <table class="abuse-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="ab_th_1">Domaine & Enjeux</th>
+                            <th class="col-phys-head" data-i18n="ab_th_2">🟢 Avec le Physique (Actuel)</th>
+                            <th class="col-demat-head" data-i18n="ab_th_3">🔴 Avec le 100% Dématérialisé (Danger)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="abuse-tbody">
+                        <!-- Généré et traduit dynamiquement par le script.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PIED DE PAGE -->
+        <footer>
+            <p data-i18n="footer_text">Outil d'information et de sensibilisation pour la défense des droits des joueurs et du pouvoir d'achat. Partagez librement.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
